@@ -28,8 +28,9 @@ fun AiMark(
     ) {
         Text(
             text = "✦",
-            modifier = markModifier
-                .padding(bottom = 1.dp, start = 1.dp, end = 1.dp),
+            modifier =
+                markModifier
+                    .padding(bottom = 1.dp, start = 1.dp, end = 1.dp),
             style = MaterialTheme.typography.labelSmall,
             color = Primary,
         )
