@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.firebaseSdk)
 }
 
 android {
@@ -50,7 +51,6 @@ dependencies {
 
     // ── Compose BOM ──────────────────────────────────
     implementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(platform(libs.androidx.compose.bom))
 
     // ── Compose UI ───────────────────────────────────
     implementation(libs.androidx.compose.ui)
@@ -60,6 +60,15 @@ dependencies {
     implementation(libs.icons.extended)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(libs.kotlinx.coroutines.play.services)
+    implementation(libs.androidx.credentials)
+    implementation(libs.androidx.credentials.play.services.auth)
+    implementation(libs.googleid)
 
     // ── AndroidX Core ────────────────────────────────
     implementation(libs.androidx.core.ktx)
