@@ -8,7 +8,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,7 +30,7 @@ fun EditTextField(
     label: String,
     modifier: Modifier,
     paddingValues: PaddingValues = PaddingValues(),
-    textAlign: TextAlign = TextAlign.Start
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     var text by remember { mutableStateOf(label) }
     val focusManager = LocalFocusManager.current
@@ -60,19 +59,20 @@ fun EditTextField(
                         enabled = true,
                         isError = false,
                         interactionSource = interactionSource,
-                        colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Primary,
-                            unfocusedBorderColor = Border.copy(alpha = 0.4f),
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent,
-                            errorContainerColor = Color.Transparent,
-                            errorCursorColor = Expense,
-                        ),
+                        colors =
+                            OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = Primary,
+                                unfocusedBorderColor = Border.copy(alpha = 0.4f),
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent,
+                                disabledContainerColor = Color.Transparent,
+                                errorContainerColor = Color.Transparent,
+                                errorCursorColor = Expense,
+                            ),
                         shape = Shape.Field,
                     )
-                }
+                },
             )
-        }
+        },
     )
 }

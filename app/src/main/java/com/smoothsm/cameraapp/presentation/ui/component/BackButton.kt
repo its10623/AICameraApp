@@ -2,8 +2,6 @@ package com.smoothsm.cameraapp.presentation.ui.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -31,7 +29,7 @@ fun BackButton(
                     Modifier
                         .size(35.dp),
                 contentDescription = "뒤로가기",
-                tint = tint
+                tint = tint,
             )
         }
     }

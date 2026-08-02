@@ -28,7 +28,7 @@ import com.smoothsm.cameraapp.presentation.ui.component.Dialog
 @Composable
 fun MainScreen(
     userKey: String,
-    onNavigateToCamera: () -> Unit
+    onNavigateToCamera: () -> Unit,
 ) {
     val context = LocalContext.current
 
@@ -51,7 +51,7 @@ fun MainScreen(
             onConfirm = {
                 showExitDialog = false
                 (context as Activity).finish()
-            }
+            },
         )
     }
 
@@ -73,41 +73,42 @@ fun MainScreen(
             )
         },
         floatingActionButton = {
-            val isBottomTabScreen = Screen.bottomNavScreen.any { tab ->
-                currentDestination?.hasRoute(tab.route::class) == true
-            }
+            val isBottomTabScreen =
+                Screen.bottomNavScreen.any { tab ->
+                    currentDestination?.hasRoute(tab.route::class) == true
+                }
             if (isBottomTabScreen) {
                 CameraFab(
-                    modifier = Modifier
-                        .offset(y = 28.dp),
+                    modifier =
+                        Modifier
+                            .offset(y = 28.dp),
                     onCamera = {
                         onNavigateToCamera()
-                    }
+                    },
                 )
             }
         },
         floatingActionButtonPosition = FabPosition.Center,
         modifier =
             Modifier
-                .fillMaxSize()
-
+                .fillMaxSize(),
     ) { paddingValues ->
         NavHost(
             navController = bottomNavController,
             startDestination = Screen.Bottom.Ledger,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
         ) {
             composable<Screen.Bottom.Ledger> {
                 LedgerScreen()
             }
             composable<Screen.Bottom.Assets> {
-                //AssetsScreen()
+                // AssetsScreen()
             }
             composable<Screen.Bottom.Statistics> {
-                //StatisticsScreen()
+                // StatisticsScreen()
             }
             composable<Screen.Bottom.Profile> {
-                //ProfileScreen()
+                // ProfileScreen()
             }
         }
     }

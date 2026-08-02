@@ -11,13 +11,16 @@ object LoginContract {
         val isPasswordVisible: Boolean = false,
         val isLoading: Boolean = false,
         val emailError: String? = null,
-        val passwordError: String? = null
+        val passwordError: String? = null,
     ) : UiState
 
     sealed class Intent : UiIntent {
         data class EmailChanged(val email: String) : Intent()
+
         data class PasswordChanged(val password: String) : Intent()
+
         data object TogglePasswordVisible : Intent()
+
         data object Login : Intent()
         // data class SocialLogin() : Intent()
     }

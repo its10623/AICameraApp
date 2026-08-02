@@ -29,15 +29,16 @@ fun CategoryChip(
     color: Color,
 ) {
     Box(
-        modifier = modifier
-            .clip(Shape.Chip)
-            .background(if (isSelected) color else Surface)
-            .border(1.dp, if (isSelected) color else TextSub.copy(alpha = 0.3f), Shape.Chip)
-            .clickable (
-                interactionSource = remember { MutableInteractionSource() },
-                indication = null
-            ) { onClick() }
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+        modifier =
+            modifier
+                .clip(Shape.Chip)
+                .background(if (isSelected) color else Surface)
+                .border(1.dp, if (isSelected) color else TextSub.copy(alpha = 0.3f), Shape.Chip)
+                .clickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
+                ) { onClick() }
+                .padding(horizontal = 8.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(

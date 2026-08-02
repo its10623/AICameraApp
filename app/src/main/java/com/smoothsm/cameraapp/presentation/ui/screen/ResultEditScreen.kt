@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,13 +24,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -48,7 +45,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
@@ -77,12 +73,11 @@ import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun ResultEditScreen(
-    receipt: Receipt,
-) {
-    val dateTime = receipt.purchaseAt?.let {
-        LocalDateTime.parse(it, DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
-    }
+fun ResultEditScreen(receipt: Receipt) {
+    val dateTime =
+        receipt.purchaseAt?.let {
+            LocalDateTime.parse(it, DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm"))
+        }
     var storeName by remember { mutableStateOf(receipt.storeName ?: "") }
     var date by remember {
         mutableStateOf(
@@ -108,15 +103,17 @@ fun ResultEditScreen(
         contentWindowInsets = WindowInsets(0.dp),
         topBar = {
             Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp)
-                    .statusBarsPadding(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp)
+                        .statusBarsPadding(),
             ) {
                 BackButton(
-                    modifier = Modifier
-                        .align(Alignment.CenterStart)
-                        .size(36.dp),
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterStart)
+                            .size(36.dp),
                     onClick = { },
                     imageVector = Icons.Rounded.ChevronLeft,
                     tint = TextSub,
@@ -130,43 +127,48 @@ fun ResultEditScreen(
         },
         bottomBar = {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(BgApp)
-                    .padding(12.dp)
-                    .navigationBarsPadding(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .background(BgApp)
+                        .padding(12.dp)
+                        .navigationBarsPadding(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 SecondaryButton(
                     text = "내용 수정",
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(end = 6.dp),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .padding(end = 6.dp),
                 )
                 PrimaryButton(
                     text = "가계부에 저장",
-                    modifier = Modifier
-                        .weight(1f)
-                        .padding(start = 6.dp),
+                    modifier =
+                        Modifier
+                            .weight(1f)
+                            .padding(start = 6.dp),
                 )
             }
         },
     ) { paddingValues ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                ) {
-                    focusManager.clearFocus()
-                },
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                    ) {
+                        focusManager.clearFocus()
+                    },
         ) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = paddingValues.calculateTopPadding()),
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .padding(top = paddingValues.calculateTopPadding()),
                 contentPadding = PaddingValues(bottom = paddingValues.calculateBottomPadding()),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
@@ -176,9 +178,10 @@ fun ResultEditScreen(
 
                 item {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 2.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 2.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -191,16 +194,18 @@ fun ResultEditScreen(
 
                 item {
                     Card(
-                        modifier = Modifier
-                            .padding(12.dp)
-                            .fillMaxWidth(),
+                        modifier =
+                            Modifier
+                                .padding(12.dp)
+                                .fillMaxWidth(),
                         shape = Shape.SummaryCard,
                         colors = CardDefaults.cardColors(containerColor = Surface),
                     ) {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
                             horizontalAlignment = Alignment.Start,
                         ) {
                             Text(
@@ -212,12 +217,13 @@ fun ResultEditScreen(
                             EditTextField(
                                 label = storeName,
                                 modifier = Modifier.fillMaxWidth(),
-                                paddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp)
+                                paddingValues = PaddingValues(horizontal = 12.dp, vertical = 16.dp),
                             )
                             Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 12.dp),
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 12.dp),
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
                                     Text(
@@ -229,10 +235,11 @@ fun ResultEditScreen(
                                     EditTextField(
                                         label = date,
                                         modifier = Modifier.fillMaxWidth(),
-                                        paddingValues = PaddingValues(
-                                            horizontal = 12.dp,
-                                            vertical = 16.dp
-                                        )
+                                        paddingValues =
+                                            PaddingValues(
+                                                horizontal = 12.dp,
+                                                vertical = 16.dp,
+                                            ),
                                     )
                                 }
                                 Spacer(modifier = Modifier.width(24.dp))
@@ -246,17 +253,19 @@ fun ResultEditScreen(
                                     EditTextField(
                                         label = time,
                                         modifier = Modifier.fillMaxWidth(),
-                                        paddingValues = PaddingValues(
-                                            horizontal = 12.dp,
-                                            vertical = 16.dp
-                                        )
+                                        paddingValues =
+                                            PaddingValues(
+                                                horizontal = 12.dp,
+                                                vertical = 16.dp,
+                                            ),
                                     )
                                 }
                             }
                             Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(),
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(),
                             ) {
                                 Text(
                                     text = "구분",
@@ -285,9 +294,10 @@ fun ResultEditScreen(
 
                 item {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -297,9 +307,10 @@ fun ResultEditScreen(
                         )
                     }
                     FlowRow(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 12.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 12.dp),
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
@@ -317,25 +328,28 @@ fun ResultEditScreen(
 
                 item {
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 2.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(start = 12.dp, end = 12.dp, top = 16.dp, bottom = 2.dp),
                         horizontalArrangement = Arrangement.Start,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = buildAnnotatedString {
-                                append("품목 ")
-                                withStyle(
-                                    style = SpanStyle(
-                                        color = Primary,
-                                    )
-                                ) {
-                                    append("${items.size}")
-                                }
+                            text =
+                                buildAnnotatedString {
+                                    append("품목 ")
+                                    withStyle(
+                                        style =
+                                            SpanStyle(
+                                                color = Primary,
+                                            ),
+                                    ) {
+                                        append("${items.size}")
+                                    }
 
-                                append("개")
-                            },
+                                    append("개")
+                                },
                             style = MaterialTheme.typography.titleMedium,
                         )
                     }
@@ -343,9 +357,10 @@ fun ResultEditScreen(
 
                 item {
                     Card(
-                        modifier = Modifier
-                            .padding(12.dp)
-                            .fillMaxWidth(),
+                        modifier =
+                            Modifier
+                                .padding(12.dp)
+                                .fillMaxWidth(),
                         shape = Shape.SummaryCard,
                         colors = CardDefaults.cardColors(containerColor = Surface),
                     ) {
@@ -353,70 +368,78 @@ fun ResultEditScreen(
                             items.forEachIndexed { index, item ->
                                 key(item.id) {
                                     Row(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(12.dp),
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .padding(12.dp),
                                         verticalAlignment = Alignment.CenterVertically,
                                     ) {
                                         Box(
-                                            modifier = Modifier
-                                                .clip(Shape.Chip)
-                                                .background(Expense.copy(alpha = 0.15f))
-                                                .clickable(
-                                                    interactionSource = remember { MutableInteractionSource() },
-                                                    indication = null
-                                                ) {
-                                                    items.removeAt(index)
-                                                }
-                                                .size(20.dp)
-                                                .align(Alignment.CenterVertically)
+                                            modifier =
+                                                Modifier
+                                                    .clip(Shape.Chip)
+                                                    .background(Expense.copy(alpha = 0.15f))
+                                                    .clickable(
+                                                        interactionSource = remember { MutableInteractionSource() },
+                                                        indication = null,
+                                                    ) {
+                                                        items.removeAt(index)
+                                                    }
+                                                    .size(20.dp)
+                                                    .align(Alignment.CenterVertically),
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Rounded.Remove,
                                                 contentDescription = "품목 삭제",
                                                 tint = Expense.copy(alpha = 0.8f),
-                                                modifier = Modifier
-                                                    .size(20.dp)
+                                                modifier =
+                                                    Modifier
+                                                        .size(20.dp),
                                             )
                                         }
                                         Spacer(modifier = Modifier.width(6.dp))
                                         EditTextField(
                                             label = item.name ?: "",
                                             modifier = Modifier.width(160.dp),
-                                            paddingValues = PaddingValues(
-                                                horizontal = 12.dp,
-                                                vertical = 8.dp
-                                            ),
+                                            paddingValues =
+                                                PaddingValues(
+                                                    horizontal = 12.dp,
+                                                    vertical = 8.dp,
+                                                ),
                                         )
                                         Spacer(modifier = Modifier.width(6.dp))
                                         EditTextField(
                                             label = item.quantity.toString(),
-                                            modifier = Modifier
-                                                .width(50.dp),
-                                            paddingValues = PaddingValues(
-                                                horizontal = 12.dp,
-                                                vertical = 8.dp
-                                            ),
-                                            textAlign = TextAlign.Center
+                                            modifier =
+                                                Modifier
+                                                    .width(50.dp),
+                                            paddingValues =
+                                                PaddingValues(
+                                                    horizontal = 12.dp,
+                                                    vertical = 8.dp,
+                                                ),
+                                            textAlign = TextAlign.Center,
                                         )
                                         Spacer(modifier = Modifier.width(6.dp))
                                         EditTextField(
                                             label = item.price?.toString() ?: "0",
                                             modifier = Modifier.width(120.dp),
-                                            paddingValues = PaddingValues(
-                                                horizontal = 12.dp,
-                                                vertical = 8.dp
-                                            ),
-                                            textAlign = TextAlign.End
+                                            paddingValues =
+                                                PaddingValues(
+                                                    horizontal = 12.dp,
+                                                    vertical = 8.dp,
+                                                ),
+                                            textAlign = TextAlign.End,
                                         )
                                     }
                                 }
 
                                 if (index < items.lastIndex) {
                                     HorizontalDivider(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(horizontal = 12.dp),
+                                        modifier =
+                                            Modifier
+                                                .fillMaxWidth()
+                                                .padding(horizontal = 12.dp),
                                         thickness = 1.dp,
                                         color = Border.copy(alpha = 0.3f),
                                     )
@@ -429,22 +452,23 @@ fun ResultEditScreen(
                             color = Border.copy(alpha = 0.3f),
                         )
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = null,
-                                ) {
-                                    items.add(
-                                        ReceiptItem(
-                                            id = System.currentTimeMillis(),
-                                            name = "",
-                                            price = 0,
-                                            quantity = 1,
-                                        ),
-                                    )
-                                }
-                                .padding(12.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .clickable(
+                                        interactionSource = remember { MutableInteractionSource() },
+                                        indication = null,
+                                    ) {
+                                        items.add(
+                                            ReceiptItem(
+                                                id = System.currentTimeMillis(),
+                                                name = "",
+                                                price = 0,
+                                                quantity = 1,
+                                            ),
+                                        )
+                                    }
+                                    .padding(12.dp),
                             horizontalArrangement = Arrangement.Center,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {

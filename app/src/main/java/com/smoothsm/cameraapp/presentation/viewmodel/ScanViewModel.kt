@@ -50,16 +50,16 @@ class ScanViewModel
                     // val receipt = scanUseCase.scanReceipt(file)
                     delay(3000.milliseconds)
                     val receipt =
-                        com.example.cameraapp.domain.model.Receipt(
+                        com.smoothsm.cameraapp.domain.model.Receipt(
                             id = 1L,
                             storeName = "테스트 마트",
                             totalPrice = 15000,
                             purchaseAt = "2026.06.28 14:00",
-                            category = com.example.cameraapp.domain.model.Category.MEAL,
+                            category = com.smoothsm.cameraapp.domain.model.Category.MEAL,
                             items =
                                 listOf(
-                                    com.example.cameraapp.domain.model.ReceiptItem(id = 1L, name = "사과", price = 5000, quantity = 1),
-                                    com.example.cameraapp.domain.model.ReceiptItem(id = 2L, name = "우유", price = 10000, quantity = 1),
+                                    com.smoothsm.cameraapp.domain.model.ReceiptItem(id = 1L, name = "사과", price = 5000, quantity = 1),
+                                    com.smoothsm.cameraapp.domain.model.ReceiptItem(id = 2L, name = "우유", price = 10000, quantity = 1),
                                 ),
                             createdAt = java.time.LocalDateTime.now(),
                             updatedAt = java.time.LocalDateTime.now(),

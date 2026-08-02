@@ -1,6 +1,5 @@
 package com.smoothsm.cameraapp.presentation.ui.util
 
-import org.checkerframework.checker.units.qual.Time
 import java.text.DecimalFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -67,4 +66,3 @@ fun formatPurchaseAt(today: LocalDateTime): String {
     val todayFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 (E) a h:mm", Locale.KOREAN)
     return today.format(todayFormatter)
 }
-

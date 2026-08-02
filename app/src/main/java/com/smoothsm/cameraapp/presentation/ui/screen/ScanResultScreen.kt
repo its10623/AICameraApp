@@ -1,6 +1,5 @@
 package com.smoothsm.cameraapp.presentation.ui.screen
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -82,7 +81,7 @@ fun ScanResultScreen(
                     onClick = { },
                     // TODO: 뒤로가기
                     imageVector = Icons.Rounded.ChevronLeft,
-                    tint = TextSub
+                    tint = TextSub,
                 )
 
                 Text(
@@ -118,12 +117,13 @@ fun ScanResultScreen(
                             .padding(start = 6.dp),
                 )
             }
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = paddingValues.calculateTopPadding()),
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = paddingValues.calculateTopPadding()),
             contentPadding = PaddingValues(bottom = 16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
@@ -144,9 +144,10 @@ fun ScanResultScreen(
                         style = MaterialTheme.typography.headlineMedium,
                     )
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -171,7 +172,7 @@ fun ScanResultScreen(
                 ) {
                     Column(
                         modifier =
-                            Modifier
+                        Modifier,
                     ) {
                         Row(
                             modifier =
@@ -200,8 +201,9 @@ fun ScanResultScreen(
                             }
 
                             Column(
-                                modifier = Modifier
-                                    .padding(12.dp),
+                                modifier =
+                                    Modifier
+                                        .padding(12.dp),
                             ) {
                                 Text(
                                     text = receipt.storeName ?: "",
@@ -315,9 +317,10 @@ fun ScanResultScreen(
                 ) {
                     Column {
                         Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
@@ -335,7 +338,7 @@ fun ScanResultScreen(
                             Text(
                                 text = "금액",
                                 style = MaterialTheme.typography.bodySmall,
-                                color = TextSub
+                                color = TextSub,
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                         }
@@ -359,27 +362,28 @@ fun ScanResultScreen(
                         )
                     }
                     Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
                             text = "합계",
-                            style = MaterialTheme.typography.headlineMedium
+                            style = MaterialTheme.typography.headlineMedium,
                         )
 
                         Text(
-                            text = formatReceiptAmount(
-                                amount = receipt.totalPrice ?: 0,
-                                isIncome = false
-                            ),
+                            text =
+                                formatReceiptAmount(
+                                    amount = receipt.totalPrice ?: 0,
+                                    isIncome = false,
+                                ),
                             style = MaterialTheme.typography.headlineMedium,
-                            color = Expense
+                            color = Expense,
                         )
                     }
-
                 }
             }
             item {

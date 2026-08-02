@@ -53,7 +53,7 @@ fun LoginScreen(
     onNavigateToMain: (String) -> Unit,
     onNavigateToFindPassword: (String) -> Unit,
     onNavigateToSignUp: () -> Unit,
-    isPasswordVisible: Boolean = false
+    isPasswordVisible: Boolean = false,
 ) {
     var email by remember { mutableStateOf("test@test.com") }
     var password by remember { mutableStateOf("test20260615!") }
@@ -64,11 +64,10 @@ fun LoginScreen(
 
     LaunchedEffect(Unit) {
         viewModel.uiSideEffect.collect { effect ->
-            when(effect) {
+            when (effect) {
                 is LoginContract.SideEffect.NavigateToMain ->
                     onNavigateToMain(effect.userKey)
                 is LoginContract.SideEffect.ShowError -> {
-
                 }
             }
         }
@@ -242,7 +241,7 @@ fun LoginScreen(
                         .padding(32.dp),
                 enabled = email.isNotBlank() && password.isNotBlank(),
                 text = "로그인",
-                onClick = { onNavigateToMain(email) }
+                onClick = { onNavigateToMain(email) },
             )
 
             Spacer(modifier = Modifier.weight(1f))

@@ -42,7 +42,7 @@ fun Dialog(
     dismissText: String = "취소",
     isTextField: Boolean = true,
     onDismiss: () -> Unit,
-    onConfirm: (String) -> Unit
+    onConfirm: (String) -> Unit,
 ) {
     var input by remember { mutableStateOf("") }
 
@@ -51,19 +51,20 @@ fun Dialog(
             shape = RoundedCornerShape(20.dp),
             tonalElevation = 2.dp,
             color = BgApp,
-            modifier = Modifier.width(300.dp)
+            modifier = Modifier.width(300.dp),
         ) {
             Column(
-                modifier = Modifier
-                    .padding(horizontal = 30.dp, vertical = 30.dp)
-                    .wrapContentHeight(),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 30.dp, vertical = 30.dp)
+                        .wrapContentHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
             ) {
                 Text(
                     title,
                     fontSize = 18.sp,
-                    fontWeight = SemiBold
+                    fontWeight = SemiBold,
                 )
                 Spacer(modifier = Modifier.height(20.dp))
 
@@ -74,41 +75,43 @@ fun Dialog(
                         label = {
                             Text(
                                 text = label,
-                                style = MaterialTheme.typography.bodyLarge
+                                style = MaterialTheme.typography.bodyLarge,
                             )
                         },
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(12.dp),
                         singleLine = true,
-                        colors = TextFieldDefaults.colors(
-                            focusedIndicatorColor = Primary,
-                            unfocusedIndicatorColor = TextSub,
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            disabledContainerColor = Color.Transparent,
-                            errorContainerColor = Expense
-                        )
+                        colors =
+                            TextFieldDefaults.colors(
+                                focusedIndicatorColor = Primary,
+                                unfocusedIndicatorColor = TextSub,
+                                focusedContainerColor = Color.Transparent,
+                                unfocusedContainerColor = Color.Transparent,
+                                disabledContainerColor = Color.Transparent,
+                                errorContainerColor = Expense,
+                            ),
                     )
                 }
                 Row(
                     Modifier
                         .fillMaxWidth()
                         .padding(start = 15.dp, end = 15.dp, top = 15.dp),
-
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     TextButton(
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = Primary
-                        ),
-                        onClick = onDismiss
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                contentColor = Primary,
+                            ),
+                        onClick = onDismiss,
                     ) { Text(dismissText, fontSize = 16.sp) }
 
                     TextButton(
-                        colors = ButtonDefaults.textButtonColors(
-                            contentColor = Primary,
-                        ),
-                        onClick = { onConfirm(input) }
+                        colors =
+                            ButtonDefaults.textButtonColors(
+                                contentColor = Primary,
+                            ),
+                        onClick = { onConfirm(input) },
                     ) { Text(confirmText, fontSize = 16.sp) }
                 }
             }

@@ -34,12 +34,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import com.example.cameraapp.presentation.ui.component.BackButton
-import com.example.cameraapp.presentation.ui.component.PrimaryButton
-import com.example.cameraapp.presentation.ui.theme.Border
-import com.example.cameraapp.presentation.ui.theme.Expense
-import com.example.cameraapp.presentation.ui.theme.Primary
-import com.example.cameraapp.presentation.ui.theme.TextSub
+import com.smoothsm.cameraapp.presentation.ui.component.BackButton
+import com.smoothsm.cameraapp.presentation.ui.component.PrimaryButton
+import com.smoothsm.cameraapp.presentation.ui.theme.Border
+import com.smoothsm.cameraapp.presentation.ui.theme.Expense
+import com.smoothsm.cameraapp.presentation.ui.theme.Primary
+import com.smoothsm.cameraapp.presentation.ui.theme.TextSub
 
 @Composable
 fun FindPasswordScreen(onNavigateBack: () -> Unit = {}) {

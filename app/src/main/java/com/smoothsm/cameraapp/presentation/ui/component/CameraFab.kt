@@ -34,7 +34,7 @@ import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun CameraFab(
-    onCamera: () -> Unit = {},
+    onCamera: () -> Unit,
     modifier: Modifier,
 ) {
     val scope = rememberCoroutineScope()

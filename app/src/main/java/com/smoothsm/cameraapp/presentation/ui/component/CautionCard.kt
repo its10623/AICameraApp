@@ -25,9 +25,7 @@ import com.smoothsm.cameraapp.presentation.ui.theme.Shape
 import com.smoothsm.cameraapp.presentation.ui.theme.Surface
 
 @Composable
-fun CautionCard(
-    text: String
-) {
+fun CautionCard(text: String) {
     Card(
         modifier =
             Modifier
@@ -35,12 +33,13 @@ fun CautionCard(
                 .fillMaxWidth(),
         shape = Shape.SummaryCard,
         colors = CardDefaults.cardColors(containerColor = CategoryGroceryBg.copy(alpha = 0.5f)),
-        border = BorderStroke(1.dp, CategoryGrocery)
+        border = BorderStroke(1.dp, CategoryGrocery),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -50,12 +49,12 @@ fun CautionCard(
                         .size(16.dp)
                         .clip(Shape.Chip)
                         .background(CategoryGrocery),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = "!",
                     style = MaterialTheme.typography.bodySmall,
-                    color = Surface
+                    color = Surface,
                 )
             }
 
@@ -64,9 +63,8 @@ fun CautionCard(
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall,
-                color = CategoryGrocery
+                color = CategoryGrocery,
             )
         }
-
     }
 }
