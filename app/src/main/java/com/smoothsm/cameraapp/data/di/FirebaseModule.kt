@@ -1,17 +1,16 @@
 package com.smoothsm.cameraapp.data.di
 
 import android.content.Context
-import com.google.android.datatransport.runtime.dagger.Module
-import com.google.android.datatransport.runtime.dagger.Provides
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import androidx.credentials.Credential
+import androidx.credentials.CredentialManager
 import com.google.firebase.auth.FirebaseAuth
-import com.smoothsm.cameraapp.R
+import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import jakarta.inject.Singleton
+import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -21,5 +20,11 @@ object FirebaseModule {
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCredentialManager(@ApplicationContext context: Context): CredentialManager {
+        return CredentialManager.create(context)
     }
 }
