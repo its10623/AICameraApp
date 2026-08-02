@@ -20,6 +20,9 @@ sealed class Screen {
     data object FindPassword : Screen()
 
     @Serializable
+    data object SignUp : Screen()
+
+    @Serializable
     data object Camera : Screen()
 
     @Serializable
@@ -30,7 +33,6 @@ sealed class Screen {
 
     @Serializable
     data object ResultEdit : Screen()
-
 
     @Serializable
     sealed class Bottom {
@@ -50,9 +52,8 @@ sealed class Screen {
             LEDGER(Ledger, "가계부", Icons.Rounded.CalendarMonth),
             ASSETS(Assets, "자산", Icons.Rounded.AccountBalanceWallet),
             STATISTICS(Statistics, "통계", Icons.Rounded.BarChart),
-            PROFILE(Profile, "프로필", Icons.Rounded.AccountCircle)
+            PROFILE(Profile, "프로필", Icons.Rounded.AccountCircle),
         }
-
     }
 
     companion object {
@@ -60,5 +61,3 @@ sealed class Screen {
     }
     // TODO 파라미터를 받는 스크린일 경우 data class로 변경
 }
-
-
