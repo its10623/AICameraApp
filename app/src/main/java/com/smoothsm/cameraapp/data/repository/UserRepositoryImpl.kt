@@ -10,7 +10,7 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(private val auth: FirebaseAuth) : UserRepository {
     override suspend fun signUp(
         email: String,
-        password: String
+        password: String,
     ): User {
         val result = auth.createUserWithEmailAndPassword(email, password).await()
         val firebaseUser = result.user ?: throw Exception("회원가입 실패")
@@ -19,6 +19,24 @@ class UserRepositoryImpl @Inject constructor(private val auth: FirebaseAuth) : U
             email = firebaseUser.email,
         )
     }
+
+    override suspend fun signIn(
+        email: String,
+        password: String
+    ): User {
+        val result = auth.signInWithEmailAndPassword(email, password).await()
+        val user = result.user ?: throw Exception("로그인 실패")
+        return User(
+            uid = user.uid,
+            email = user.email,
+            nickname = user.displayName
+        )
+    }
+
+    override suspend fun signOut() {
+        auth.signOut()
+    }
+
 
     override suspend fun updateNickname(nickname: String): User {
         val firebaseUser = auth.currentUser ?: throw Exception("로그인 상태가 아닙니다.")
