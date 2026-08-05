@@ -1,6 +1,8 @@
 package com.smoothsm.cameraapp.data.repository
 
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.smoothsm.cameraapp.domain.model.User
 import com.smoothsm.cameraapp.domain.repository.UserRepository
@@ -44,6 +46,18 @@ class UserRepositoryImpl @Inject constructor(private val auth: FirebaseAuth) : U
             .setDisplayName(nickname)
             .build()
         firebaseUser.updateProfile(profileUpdates).await()
+
+        return User(
+            uid = firebaseUser.uid,
+            email = firebaseUser.email,
+            nickname = firebaseUser.displayName
+        )
+    }
+
+    override suspend fun signInWithGoogle(idToken: String): User {
+        val authCredential = GoogleAuthProvider.getCredential(idToken, null)
+        val result = auth.signInWithCredential(authCredential).await()
+        val firebaseUser = result.user ?: throw Exception("로그인 실패")
 
         return User(
             uid = firebaseUser.uid,
