@@ -4,6 +4,8 @@ import com.smoothsm.cameraapp.domain.usecase.CameraUseCase
 import com.smoothsm.cameraapp.domain.usecase.CameraUseCaseImpl
 import com.smoothsm.cameraapp.domain.usecase.ScanUseCase
 import com.smoothsm.cameraapp.domain.usecase.ScanUseCaseImpl
+import com.smoothsm.cameraapp.domain.usecase.UserUseCase
+import com.smoothsm.cameraapp.domain.usecase.UserUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,4 +22,8 @@ abstract class UseCaseModule {
     @Binds
     @Singleton
     abstract fun bindScanUseCase(impl: ScanUseCaseImpl): ScanUseCase
+
+    @Binds
+    @Singleton
+    abstract fun bindUserUseCase(impl: UserUseCaseImpl): UserUseCase
 }
