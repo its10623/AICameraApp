@@ -15,4 +15,12 @@ class UserUseCaseImpl @Inject constructor(
         userRepository.signUp(email, password)
         return userRepository.updateNickname(nickname)
     }
+
+    override suspend fun signIn(email: String, password: String): User =
+        userRepository.signIn(email, password)
+
+
+    override suspend fun signOut() = userRepository.signOut()
+
+    override suspend fun signInWithGoogle(idToken: String): User = userRepository.signInWithGoogle(idToken)
 }
