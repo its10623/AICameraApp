@@ -4,7 +4,7 @@ import com.smoothsm.cameraapp.presentation.base.UiIntent
 import com.smoothsm.cameraapp.presentation.base.UiSideEffect
 import com.smoothsm.cameraapp.presentation.base.UiState
 
-object LoginContract {
+object SignInContract {
     data class State(
         val email: String = "",
         val password: String = "",
@@ -21,12 +21,12 @@ object LoginContract {
 
         data object TogglePasswordVisible : Intent()
 
-        data object Login : Intent()
-        // data class SocialLogin() : Intent()
+        data object SignIn : Intent()
+        data class GoogleSignIn(val idToken: String) : Intent()
     }
 
     sealed class SideEffect : UiSideEffect {
-        data class NavigateToMain(val userKey: String) : SideEffect()
+        data class NavigateToMain(val uid: String) : SideEffect()
 
         data class ShowError(val message: String) : SideEffect()
     }
