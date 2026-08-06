@@ -20,7 +20,7 @@ import com.smoothsm.cameraapp.presentation.ui.screen.ScanResultScreen
 import com.smoothsm.cameraapp.presentation.ui.screen.ScanningScreen
 import com.smoothsm.cameraapp.presentation.ui.screen.Screen
 import com.smoothsm.cameraapp.presentation.ui.screen.SignUpScreen
-import com.smoothsm.cameraapp.presentation.viewmodel.LoginViewModel
+import com.smoothsm.cameraapp.presentation.viewmodel.SignInViewModel
 import com.smoothsm.cameraapp.presentation.viewmodel.ScanViewModel
 import java.time.LocalDateTime
 
@@ -28,7 +28,7 @@ import java.time.LocalDateTime
 fun AppNavigation() {
     val navController = rememberNavController()
     val scanViewModel: ScanViewModel = hiltViewModel()
-    val loginViewModel: LoginViewModel = hiltViewModel()
+    val signInViewModel: SignInViewModel = hiltViewModel()
 
     val receipt =
         Receipt(
@@ -101,7 +101,7 @@ fun AppNavigation() {
     NavHost(navController = navController, startDestination = Screen.Login) {
         composable<Screen.Login> {
             LoginScreen(
-                viewModel = loginViewModel,
+                viewModel = signInViewModel,
                 onNavigateToMain = { userKey ->
                     val encodeUserKey = Uri.encode(userKey)
                     navController.navigate(Screen.Main(encodeUserKey)) {
