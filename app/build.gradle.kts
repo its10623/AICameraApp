@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.android)
@@ -10,12 +9,12 @@ plugins {
 
 android {
     namespace = "com.smoothsm.cameraapp"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.smoothsm.cameraapp"
         minSdk = 26
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -33,17 +32,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
-    }
-
     buildFeatures {
         compose = true
     }
+}
 
-    // TFLite 모델 파일 압축 방지
-    androidResources {
-        noCompress += "tflite"
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
     }
 }
 
@@ -81,6 +77,7 @@ dependencies {
     // ── Hilt (DI) ────────────────────────────────────
     implementation(libs.hilt.android)
     ksp(libs.hilt.android.compiler)
+    ksp(libs.kotlin.metadata.jvm) // Hilt의 kotlin-metadata-jvm이 아직 Kotlin 2.4.x 메타데이터를 못 읽어서 최신 버전으로 오버라이드
     implementation(libs.hilt.navigation.compose)
 
     // ── Room (보관함 P1) ──────────────────────────────
@@ -94,11 +91,6 @@ dependencies {
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.view)
     implementation(libs.exifinterface)
-
-    // ── TFLite (온디바이스 YOLO) ──────────────────────
-    implementation(libs.tflite)
-    implementation(libs.tflite.support)
-    implementation(libs.tflite.gpu)
 
     // ── ARCore (거리 측정) ────────────────────────────
     implementation(libs.arcore)
