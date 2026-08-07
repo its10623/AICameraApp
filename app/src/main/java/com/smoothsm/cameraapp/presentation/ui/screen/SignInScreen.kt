@@ -244,6 +244,8 @@ fun LoginScreen(
                 onClick = { onNavigateToMain(email) },
             )
 
+            GoogleSignInButton()
+
             Spacer(modifier = Modifier.weight(1f))
 
             Row(
