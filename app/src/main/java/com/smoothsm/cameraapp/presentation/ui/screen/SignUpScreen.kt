@@ -21,14 +21,16 @@ import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,24 +39,38 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.smoothsm.cameraapp.presentation.contract.SignUpContract
 import com.smoothsm.cameraapp.presentation.ui.component.BackButton
 import com.smoothsm.cameraapp.presentation.ui.component.PrimaryButton
 import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.Expense
 import com.smoothsm.cameraapp.presentation.ui.theme.Primary
 import com.smoothsm.cameraapp.presentation.ui.theme.TextSub
+import com.smoothsm.cameraapp.presentation.viewmodel.SignUpViewModel
 
 @Composable
-fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
-    var nickname by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordConfirm by remember { mutableStateOf("") }
-
-    var passwordVisible by remember { mutableStateOf(false) }
-    var passwordConfirmVisible by remember { mutableStateOf(false) }
+fun SignUpScreen(
+    viewModel: SignUpViewModel = hiltViewModel(),
+    onNavigateToMain: (String) -> Unit,
+    onNavigateBack: () -> Unit = {},
+) {
+    val state by viewModel.uiState.collectAsState()
+    val snackBarHostState = remember { SnackbarHostState() }
 
     val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(Unit) {
+        viewModel.uiSideEffect.collect { effect ->
+            when (effect) {
+                is SignUpContract.SideEffect.NavigateToMain ->
+                    onNavigateToMain(effect.uid)
+                is SignUpContract.SideEffect.ShowError -> {
+                    snackBarHostState.showSnackbar(effect.message)
+                }
+            }
+        }
+    }
 
     Scaffold(
         modifier =
@@ -91,6 +107,7 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
                 )
             }
         },
+        snackbarHost = { SnackbarHost(snackBarHostState) },
     ) { paddingValues ->
         Column(
             modifier =
@@ -115,8 +132,8 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
             }
 
             OutlinedTextField(
-                value = nickname,
-                onValueChange = { nickname = it },
+                value = state.nickname,
+                onValueChange = { viewModel.handleIntent(SignUpContract.Intent.NicknameChanged(it)) },
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 modifier =
@@ -156,8 +173,8 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
             }
 
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.email,
+                onValueChange = { viewModel.handleIntent(SignUpContract.Intent.EmailChanged(it)) },
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 modifier =
@@ -166,7 +183,12 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
                         .padding(horizontal = 32.dp),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 singleLine = true,
-                isError = false,
+                isError = state.emailError != null,
+                supportingText = {
+                    state.emailError?.let { message ->
+                        Text(text = message, color = Expense)
+                    }
+                },
                 shape = RoundedCornerShape(12.dp),
                 colors =
                     TextFieldDefaults.colors(
@@ -197,8 +219,8 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
             }
 
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = state.password,
+                onValueChange = { viewModel.handleIntent(SignUpContract.Intent.PasswordChanged(it)) },
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 modifier =
@@ -207,16 +229,21 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
                         .padding(horizontal = 32.dp),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 singleLine = true,
-                isError = false,
+                isError = state.passwordError != null,
+                supportingText = {
+                    state.passwordError?.let { message ->
+                        Text(text = message, color = Expense)
+                    }
+                },
                 visualTransformation =
-                    if (passwordVisible) {
+                    if (state.isPasswordVisible) {
                         VisualTransformation.None
                     } else {
                         PasswordVisualTransformation()
                     },
                 trailingIcon = {
                     TextButton(
-                        onClick = { passwordVisible = !passwordVisible },
+                        onClick = { viewModel.handleIntent(SignUpContract.Intent.TogglePasswordVisible) },
                     ) {
                         Text(
                             text = "보기",
@@ -255,8 +282,8 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
             }
 
             OutlinedTextField(
-                value = passwordConfirm,
-                onValueChange = { passwordConfirm = it },
+                value = state.passwordConfirm,
+                onValueChange = { viewModel.handleIntent(SignUpContract.Intent.PasswordConfirmChanged(it)) },
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 modifier =
@@ -265,16 +292,21 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
                         .padding(horizontal = 32.dp),
                 textStyle = MaterialTheme.typography.bodyMedium,
                 singleLine = true,
-                isError = false,
+                isError = state.passwordError != null,
+                supportingText = {
+                    state.passwordError?.let { message ->
+                        Text(text = message, color = Expense)
+                    }
+                },
                 visualTransformation =
-                    if (passwordConfirmVisible) {
+                    if (state.isPasswordConfirmVisible) {
                         VisualTransformation.None
                     } else {
                         PasswordVisualTransformation()
                     },
                 trailingIcon = {
                     TextButton(
-                        onClick = { passwordConfirmVisible = !passwordConfirmVisible },
+                        onClick = { viewModel.handleIntent(SignUpContract.Intent.TogglePasswordConfirmVisible) },
                     ) {
                         Text(
                             text = "보기",
@@ -304,14 +336,12 @@ fun SignUpScreen(onNavigateBack: () -> Unit = {}) {
                         .fillMaxWidth()
                         .padding(32.dp),
                 enabled =
-                    nickname.isNotBlank() &&
-                        email.isNotBlank() &&
-                        password.isNotBlank() &&
-                        passwordConfirm.isNotBlank(),
+                    state.nickname.isNotBlank() &&
+                            state.email.isNotBlank() &&
+                            state.password.isNotBlank() &&
+                            state.passwordConfirm.isNotBlank(),
                 text = "회원가입",
-                onClick = {
-                    // TODO: 회원가입 로직 연동 (Firebase 연동 후)
-                },
+                onClick = { viewModel.handleIntent(SignUpContract.Intent.SignUp) },
             )
             Spacer(modifier = Modifier.weight(1f))
         }
