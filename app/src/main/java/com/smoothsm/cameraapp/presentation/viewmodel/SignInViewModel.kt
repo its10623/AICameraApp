@@ -40,7 +40,6 @@ constructor(
                         setSideEffect { SignInContract.SideEffect.ShowError(e.message ?: "로그인 실패") }
                     }
                 }
-
             }
             is SignInContract.Intent.GoogleSignIn -> {
                 viewModelScope.launch {

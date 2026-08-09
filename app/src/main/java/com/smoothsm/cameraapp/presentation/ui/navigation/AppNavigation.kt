@@ -13,7 +13,7 @@ import com.smoothsm.cameraapp.domain.model.ReceiptItem
 import com.smoothsm.cameraapp.presentation.contract.ScanContract
 import com.smoothsm.cameraapp.presentation.ui.screen.CameraScreen
 import com.smoothsm.cameraapp.presentation.ui.screen.FindPasswordScreen
-import com.smoothsm.cameraapp.presentation.ui.screen.LoginScreen
+import com.smoothsm.cameraapp.presentation.ui.screen.SignInScreen
 import com.smoothsm.cameraapp.presentation.ui.screen.MainScreen
 import com.smoothsm.cameraapp.presentation.ui.screen.ResultEditScreen
 import com.smoothsm.cameraapp.presentation.ui.screen.ScanResultScreen
@@ -100,7 +100,7 @@ fun AppNavigation() {
 
     NavHost(navController = navController, startDestination = Screen.Login) {
         composable<Screen.Login> {
-            LoginScreen(
+            SignInScreen(
                 viewModel = signInViewModel,
                 onNavigateToMain = { userKey ->
                     val encodeUserKey = Uri.encode(userKey)
@@ -113,7 +113,6 @@ fun AppNavigation() {
                 },
                 onNavigateToFindPassword = { navController.navigate(Screen.FindPassword) },
                 onNavigateToSignUp = { navController.navigate(Screen.SignUp) },
-                isPasswordVisible = true,
             )
         }
         composable<Screen.FindPassword> {

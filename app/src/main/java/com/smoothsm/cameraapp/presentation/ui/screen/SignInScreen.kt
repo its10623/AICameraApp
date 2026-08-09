@@ -19,15 +19,16 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,35 +40,34 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.smoothsm.cameraapp.R
-import com.smoothsm.cameraapp.presentation.contract.LoginContract
+import com.smoothsm.cameraapp.presentation.contract.SignInContract
+import com.smoothsm.cameraapp.presentation.ui.component.GoogleSignInButton
 import com.smoothsm.cameraapp.presentation.ui.component.PrimaryButton
 import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.Expense
 import com.smoothsm.cameraapp.presentation.ui.theme.Primary
 import com.smoothsm.cameraapp.presentation.ui.theme.TextSub
-import com.smoothsm.cameraapp.presentation.viewmodel.LoginViewModel
+import com.smoothsm.cameraapp.presentation.viewmodel.SignInViewModel
 
 @Composable
-fun LoginScreen(
-    viewModel: LoginViewModel = hiltViewModel(),
-    onNavigateToMain: (String) -> Unit,
-    onNavigateToFindPassword: (String) -> Unit,
+fun SignInScreen(
+    viewModel: SignInViewModel = hiltViewModel(),
+    onNavigateToMain: (String) -> Unit = {},
+    onNavigateToFindPassword: (String) -> Unit = {},
     onNavigateToSignUp: () -> Unit,
-    isPasswordVisible: Boolean = false,
 ) {
-    var email by remember { mutableStateOf("test@test.com") }
-    var password by remember { mutableStateOf("test20260615!") }
-
-    var passwordVisible by remember { mutableStateOf(isPasswordVisible) }
+    val state by viewModel.uiState.collectAsState()
+    val snackBarHostState = remember { SnackbarHostState() }
 
     val focusManager = LocalFocusManager.current
 
     LaunchedEffect(Unit) {
         viewModel.uiSideEffect.collect { effect ->
             when (effect) {
-                is LoginContract.SideEffect.NavigateToMain ->
-                    onNavigateToMain(effect.userKey)
-                is LoginContract.SideEffect.ShowError -> {
+                is SignInContract.SideEffect.NavigateToMain ->
+                    onNavigateToMain(effect.uid)
+                is SignInContract.SideEffect.ShowError -> {
+                    snackBarHostState.showSnackbar(effect.message)
                 }
             }
         }
@@ -83,6 +83,7 @@ fun LoginScreen(
                 ) {
                     focusManager.clearFocus()
                 },
+        snackbarHost = { SnackbarHost(snackBarHostState) }
     ) { paddingValues ->
         Column(
             modifier =
@@ -134,8 +135,8 @@ fun LoginScreen(
             }
 
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = state.email,
+                onValueChange = { viewModel.handleIntent(SignInContract.Intent.EmailChanged(it)) },
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 modifier =
@@ -175,8 +176,8 @@ fun LoginScreen(
             }
 
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = state.password,
+                onValueChange = { viewModel.handleIntent(SignInContract.Intent.PasswordChanged(it)) },
                 keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
                 modifier =
@@ -187,14 +188,14 @@ fun LoginScreen(
                 singleLine = true,
                 isError = false,
                 visualTransformation =
-                    if (isPasswordVisible) {
+                    if (state.isPasswordVisible) {
                         VisualTransformation.None
                     } else {
                         PasswordVisualTransformation()
                     },
                 trailingIcon = {
                     TextButton(
-                        onClick = { passwordVisible = !passwordVisible },
+                        onClick = { viewModel.handleIntent(SignInContract.Intent.TogglePasswordVisible) },
                     ) {
                         Text(
                             text = "보기",
@@ -224,7 +225,7 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.End,
             ) {
                 TextButton(
-                    onClick = { onNavigateToFindPassword(email) },
+                    onClick = { onNavigateToFindPassword(state.email) },
                 ) {
                     Text(
                         text = "비밀번호를 잊어버리셨나요?",
@@ -239,9 +240,9 @@ fun LoginScreen(
                     Modifier
                         .fillMaxWidth()
                         .padding(32.dp),
-                enabled = email.isNotBlank() && password.isNotBlank(),
+                enabled = state.email.isNotBlank() && state.password.isNotBlank(),
                 text = "로그인",
-                onClick = { onNavigateToMain(email) },
+                onClick = { viewModel.handleIntent(SignInContract.Intent.SignIn) },
             )
 
             GoogleSignInButton()
