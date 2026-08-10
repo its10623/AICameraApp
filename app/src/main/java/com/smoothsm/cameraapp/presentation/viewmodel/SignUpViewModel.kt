@@ -2,6 +2,8 @@ package com.smoothsm.cameraapp.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.smoothsm.cameraapp.domain.usecase.UserUseCase
+import com.smoothsm.cameraapp.domain.validator.user.EmailValidator
+import com.smoothsm.cameraapp.domain.validator.user.PasswordValidator
 import com.smoothsm.cameraapp.presentation.base.BaseViewModel
 import com.smoothsm.cameraapp.presentation.contract.SignUpContract
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,16 +25,16 @@ constructor(
             }
 
             is SignUpContract.Intent.EmailChanged -> {
-                val error = if (intent.email.isEmpty()) "이메일을 입력해 주세요" else null
-                //TODO Validator 검증 필
+                val error = EmailValidator.validate(intent.email)
                 setState { copy(email = intent.email, emailError = error) }
             }
 
             is SignUpContract.Intent.PasswordChanged -> {
-                val error = if (currentState.password.isNotEmpty() &&
+                val formatError = PasswordValidator.validate(intent.password)
+                val confirmError = if (currentState.passwordConfirm.isNotEmpty() &&
                     intent.password != currentState.passwordConfirm
                 ) "비밀번호가 일치하지 않습니다" else null
-                setState { copy(password = intent.password, passwordConfirmError = error) }
+                setState { copy(password = intent.password, passwordError = formatError, passwordConfirmError = confirmError) }
             }
 
             is SignUpContract.Intent.PasswordConfirmChanged -> {
@@ -68,8 +70,6 @@ constructor(
                     }
                 }
             }
-
-            else -> {}
         }
     }
 }
