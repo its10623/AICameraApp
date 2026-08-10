@@ -8,7 +8,10 @@ import androidx.activity.enableEdgeToEdge
 import com.smoothsm.cameraapp.domain.model.Category
 import com.smoothsm.cameraapp.domain.model.Receipt
 import com.smoothsm.cameraapp.domain.model.ReceiptItem
+import com.smoothsm.cameraapp.presentation.ui.navigation.AppNavigation
 import com.smoothsm.cameraapp.presentation.ui.screen.ResultEditScreen
+import com.smoothsm.cameraapp.presentation.ui.screen.SignInScreen
+import com.smoothsm.cameraapp.presentation.ui.screen.SignUpScreen
 import com.smoothsm.cameraapp.presentation.ui.theme.CameraAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import java.time.LocalDateTime
@@ -31,7 +34,8 @@ class MainActivity : ComponentActivity() {
         )
         setContent {
             CameraAppTheme {
-                ResultEditScreen(
+                AppNavigation()
+                /*ResultEditScreen(
                     Receipt(
                         id = 1L,
                         category = Category.GROCERY,
@@ -98,7 +102,7 @@ class MainActivity : ComponentActivity() {
                         createdAt = LocalDateTime.of(2026, 6, 17, 19, 25),
                         updatedAt = LocalDateTime.of(2026, 6, 17, 19, 25),
                     ),
-                )
+                )*/
             }
         }
     }

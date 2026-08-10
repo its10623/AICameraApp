@@ -22,6 +22,7 @@ import com.smoothsm.cameraapp.presentation.ui.screen.Screen
 import com.smoothsm.cameraapp.presentation.ui.screen.SignUpScreen
 import com.smoothsm.cameraapp.presentation.viewmodel.SignInViewModel
 import com.smoothsm.cameraapp.presentation.viewmodel.ScanViewModel
+import com.smoothsm.cameraapp.presentation.viewmodel.SignUpViewModel
 import java.time.LocalDateTime
 
 @Composable
@@ -29,6 +30,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val scanViewModel: ScanViewModel = hiltViewModel()
     val signInViewModel: SignInViewModel = hiltViewModel()
+    val signUpViewModel: SignUpViewModel = hiltViewModel()
 
     val receipt =
         Receipt(
@@ -122,7 +124,17 @@ fun AppNavigation() {
         }
         composable<Screen.SignUp> {
             SignUpScreen(
+                viewModel = signUpViewModel,
                 onNavigateBack = { navController.popBackStack() },
+                onNavigateToMain = { userKey ->
+                    val encodeUserKey = Uri.encode(userKey)
+                    navController.navigate(Screen.Main(encodeUserKey)) {
+                        popUpTo(Screen.Login) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
             )
         }
         composable<Screen.Main> { backStackEntry ->
