@@ -1,5 +1,6 @@
 package com.smoothsm.cameraapp.presentation.ui.screen
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -29,15 +31,19 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.smoothsm.cameraapp.R
 import com.smoothsm.cameraapp.presentation.contract.SignInContract
@@ -46,8 +52,10 @@ import com.smoothsm.cameraapp.presentation.ui.component.PrimaryButton
 import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.Expense
 import com.smoothsm.cameraapp.presentation.ui.theme.Primary
+import com.smoothsm.cameraapp.presentation.ui.theme.Shape
 import com.smoothsm.cameraapp.presentation.ui.theme.TextSub
 import com.smoothsm.cameraapp.presentation.viewmodel.SignInViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignInScreen(
@@ -59,6 +67,10 @@ fun SignInScreen(
     val state by viewModel.uiState.collectAsState()
     val snackBarHostState = remember { SnackbarHostState() }
 
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val serverClientId = stringResource(R.string.default_web_client_id)
+
     val focusManager = LocalFocusManager.current
 
     LaunchedEffect(Unit) {
@@ -66,6 +78,7 @@ fun SignInScreen(
             when (effect) {
                 is SignInContract.SideEffect.NavigateToMain ->
                     onNavigateToMain(effect.uid)
+
                 is SignInContract.SideEffect.ShowError -> {
                     snackBarHostState.showSnackbar(effect.message)
                 }
@@ -240,12 +253,36 @@ fun SignInScreen(
                     Modifier
                         .fillMaxWidth()
                         .padding(32.dp),
+                shape = Shape.Chip,
                 enabled = state.email.isNotBlank() && state.password.isNotBlank(),
                 text = "로그인",
-                onClick = { viewModel.handleIntent(SignInContract.Intent.SignIn) },
+                onClick = {
+                    viewModel.handleIntent(SignInContract.Intent.SignIn)
+                },
+                isLoading = state.isLoading
             )
 
-            GoogleSignInButton()
+            GoogleSignInButton(
+                onClick = {
+                    coroutineScope.launch {
+                        try {
+                            val idToken = viewModel.googleAuthClient.signIn(
+                                activityContext = context as Activity,
+                                serverClientId = serverClientId
+                            )
+                            viewModel.handleIntent(SignInContract.Intent.GoogleSignIn(idToken))
+                        } catch (e: GetCredentialCancellationException) {
+                        } catch (e: Exception) {
+                            snackBarHostState.showSnackbar(e.message ?: "구글 로그인에 실패했습니다")
+                        }
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                    .padding(horizontal = 32.dp),
+                isLoading = state.isGoogleLoading
+            )
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -253,6 +290,7 @@ fun SignInScreen(
                 modifier =
                     Modifier
                         .fillMaxWidth()
+                        .height(50.dp)
                         .padding(16.dp),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,

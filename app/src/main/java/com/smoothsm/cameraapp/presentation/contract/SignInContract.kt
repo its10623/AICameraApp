@@ -10,6 +10,7 @@ object SignInContract {
         val password: String = "",
         val isPasswordVisible: Boolean = false,
         val isLoading: Boolean = false,
+        val isGoogleLoading: Boolean = false,
         val emailError: String? = null,
         val passwordError: String? = null,
     ) : UiState
