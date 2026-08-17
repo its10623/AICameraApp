@@ -1,4 +1,4 @@
-package com.smoothsm.cameraapp.data.di
+package com.smoothsm.cameraapp.di
 
 import android.content.Context
 import androidx.credentials.Credential

@@ -1,4 +1,4 @@
-package com.smoothsm.cameraapp.data.di
+package com.smoothsm.cameraapp.di
 
 import com.smoothsm.cameraapp.domain.usecase.CameraUseCase
 import com.smoothsm.cameraapp.domain.usecase.CameraUseCaseImpl
