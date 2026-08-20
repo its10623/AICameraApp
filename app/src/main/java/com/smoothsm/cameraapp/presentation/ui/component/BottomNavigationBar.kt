@@ -39,9 +39,6 @@ fun BottomNavigationBar(
                 label = { Text(bottom.title) },
                 onClick = { onNavigate(bottom.route) },
             )
-            if (index == 0) {
-                Spacer(modifier = Modifier.width(60.dp))
-            }
         }
     }
 }
