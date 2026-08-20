@@ -1,6 +1,7 @@
 package com.smoothsm.cameraapp.presentation.ui.screen
 
 import android.app.Activity
+import android.provider.Settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -108,7 +109,7 @@ fun MainScreen(
                 // StatisticsScreen()
             }
             composable<Screen.Bottom.Profile> {
-                // ProfileScreen()
+                SettingsScreen()
             }
         }
     }
