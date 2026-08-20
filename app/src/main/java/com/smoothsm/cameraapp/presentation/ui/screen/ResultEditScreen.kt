@@ -27,7 +27,6 @@ import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.Remove
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -58,10 +57,10 @@ import com.smoothsm.cameraapp.presentation.ui.component.CategoryChip
 import com.smoothsm.cameraapp.presentation.ui.component.CautionCard
 import com.smoothsm.cameraapp.presentation.ui.component.DivisionChip
 import com.smoothsm.cameraapp.presentation.ui.component.EditTextField
+import com.smoothsm.cameraapp.presentation.ui.component.ListDivider
 import com.smoothsm.cameraapp.presentation.ui.component.PrimaryButton
 import com.smoothsm.cameraapp.presentation.ui.component.SecondaryButton
 import com.smoothsm.cameraapp.presentation.ui.theme.BgApp
-import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.Expense
 import com.smoothsm.cameraapp.presentation.ui.theme.Primary
 import com.smoothsm.cameraapp.presentation.ui.theme.Shape
@@ -435,22 +434,16 @@ fun ResultEditScreen(receipt: Receipt) {
                                 }
 
                                 if (index < items.lastIndex) {
-                                    HorizontalDivider(
+                                    ListDivider(
                                         modifier =
                                             Modifier
                                                 .fillMaxWidth()
                                                 .padding(horizontal = 12.dp),
-                                        thickness = 1.dp,
-                                        color = Border.copy(alpha = 0.3f),
                                     )
                                 }
                             }
                         }
-                        HorizontalDivider(
-                            modifier = Modifier.fillMaxWidth(),
-                            thickness = 1.dp,
-                            color = Border.copy(alpha = 0.3f),
-                        )
+                        ListDivider(modifier = Modifier.fillMaxWidth())
                         Row(
                             modifier =
                                 Modifier

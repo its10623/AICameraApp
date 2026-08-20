@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +33,6 @@ import com.smoothsm.cameraapp.domain.model.chipBg
 import com.smoothsm.cameraapp.domain.model.icon
 import com.smoothsm.cameraapp.domain.model.iconTint
 import com.smoothsm.cameraapp.domain.model.label
-import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.Expense
 import com.smoothsm.cameraapp.presentation.ui.theme.ModalBg
 import com.smoothsm.cameraapp.presentation.ui.theme.Primary
@@ -175,12 +173,10 @@ fun ReceiptDetailBottomSheet(
                 )
             }
 
-            HorizontalDivider(
+            ListDivider(
                 modifier =
                     Modifier
                         .fillMaxWidth(),
-                thickness = 1.dp,
-                color = Border.copy(alpha = 0.3f),
             )
             Row(
                 modifier =
@@ -216,12 +212,10 @@ fun ReceiptDetailBottomSheet(
                 receipt = receipt,
                 5,
             )
-            HorizontalDivider(
+            ListDivider(
                 modifier =
                     Modifier
                         .fillMaxWidth(),
-                thickness = 1.dp,
-                color = Border.copy(alpha = 0.3f),
             )
 
             Row(

@@ -20,7 +20,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -40,11 +39,11 @@ import com.smoothsm.cameraapp.presentation.ui.component.AiMark
 import com.smoothsm.cameraapp.presentation.ui.component.BackButton
 import com.smoothsm.cameraapp.presentation.ui.component.CautionCard
 import com.smoothsm.cameraapp.presentation.ui.component.CheckPrimaryIcon
+import com.smoothsm.cameraapp.presentation.ui.component.ListDivider
 import com.smoothsm.cameraapp.presentation.ui.component.PrimaryButton
 import com.smoothsm.cameraapp.presentation.ui.component.ReceiptItemList
 import com.smoothsm.cameraapp.presentation.ui.component.SecondaryButton
 import com.smoothsm.cameraapp.presentation.ui.theme.BgApp
-import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.Expense
 import com.smoothsm.cameraapp.presentation.ui.theme.Primary
 import com.smoothsm.cameraapp.presentation.ui.theme.Shape
@@ -237,13 +236,11 @@ fun ScanResultScreen(
                                 }
                             }
                         }
-                        HorizontalDivider(
+                        ListDivider(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 12.dp),
-                            thickness = 1.dp,
-                            color = Border.copy(alpha = 0.3f),
                         )
                         Row(
                             modifier =
@@ -267,13 +264,11 @@ fun ScanResultScreen(
                                         .padding(horizontal = 4.dp, vertical = 2.dp),
                             )
                         }
-                        HorizontalDivider(
+                        ListDivider(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 12.dp),
-                            thickness = 1.dp,
-                            color = Border.copy(alpha = 0.3f),
                         )
                         Row(
                             modifier =
@@ -342,23 +337,19 @@ fun ScanResultScreen(
                             )
                             Spacer(modifier = Modifier.width(20.dp))
                         }
-                        HorizontalDivider(
+                        ListDivider(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 12.dp),
-                            thickness = 1.dp,
-                            color = Border.copy(alpha = 0.3f),
                         )
                         ReceiptItemList(modifier = Modifier.fillMaxWidth(), receipt = receipt, 3)
 
-                        HorizontalDivider(
+                        ListDivider(
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
                                     .padding(horizontal = 12.dp),
-                            thickness = 1.dp,
-                            color = Border.copy(alpha = 0.3f),
                         )
                     }
                     Row(

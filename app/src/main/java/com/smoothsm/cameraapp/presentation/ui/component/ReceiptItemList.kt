@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
 import androidx.compose.material.icons.rounded.KeyboardArrowUp
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.smoothsm.cameraapp.domain.model.Receipt
-import com.smoothsm.cameraapp.presentation.ui.theme.Border
 import com.smoothsm.cameraapp.presentation.ui.theme.TextSub
 import com.smoothsm.cameraapp.presentation.ui.util.formatItemAmount
 
@@ -61,13 +59,11 @@ fun ReceiptItemList(
                     style = MaterialTheme.typography.titleMedium,
                 )
             }
-            HorizontalDivider(
+            ListDivider(
                 modifier =
                     Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 12.dp),
-                thickness = 1.dp,
-                color = Border.copy(alpha = 0.3f),
             )
         }
         if (receipt.items.size > take) {
