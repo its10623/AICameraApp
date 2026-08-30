@@ -142,6 +142,14 @@ fun AppNavigation() {
             MainScreen(
                 userKey = route.userKey,
                 onNavigateToCamera = { navController.navigate(Screen.Camera) },
+                onNavigateToLogin = {
+                    navController.navigate(Screen.Login) {
+                        popUpTo(Screen.Login) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
+                },
             )
         }
         composable<Screen.Camera> {
