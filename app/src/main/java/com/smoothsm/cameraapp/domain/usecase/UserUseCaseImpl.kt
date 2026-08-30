@@ -26,4 +26,6 @@ class UserUseCaseImpl @Inject constructor(
     }
     override suspend fun signOut() = userRepository.signOut()
     override suspend fun signInWithGoogle(idToken: String): User = userRepository.signInWithGoogle(idToken)
+    override fun getCurrentUser(): User? = userRepository.getCurrentUser()
+    override suspend fun deleteAccount() = userRepository.deleteAccount()
 }

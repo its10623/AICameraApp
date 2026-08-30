@@ -8,4 +8,6 @@ interface UserRepository {
     suspend fun signUp(email: String, password: String): User
     suspend fun updateNickname(nickname: String): User
     suspend fun signInWithGoogle(idToken: String): User
+    fun getCurrentUser(): User?
+    suspend fun deleteAccount()
 }

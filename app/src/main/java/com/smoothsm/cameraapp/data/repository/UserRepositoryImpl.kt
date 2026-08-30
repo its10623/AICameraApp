@@ -65,4 +65,18 @@ class UserRepositoryImpl @Inject constructor(private val auth: FirebaseAuth) : U
             nickname = firebaseUser.displayName
         )
     }
+
+    override fun getCurrentUser(): User? {
+        val firebaseUser = auth.currentUser ?: return null
+        return User(
+            uid = firebaseUser.uid,
+            email = firebaseUser.email,
+            nickname = firebaseUser.displayName
+        )
+    }
+
+    override suspend fun deleteAccount() {
+        val firebaseUser = auth.currentUser ?: throw Exception("로그인 상태가 아닙니다.")
+        firebaseUser.delete().await()
+    }
 }

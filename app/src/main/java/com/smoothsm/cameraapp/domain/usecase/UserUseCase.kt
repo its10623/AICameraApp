@@ -7,4 +7,6 @@ interface UserUseCase {
     suspend fun signIn(email: String, password: String): User
     suspend fun signOut()
     suspend fun signInWithGoogle(idToken: String): User
+    fun getCurrentUser(): User?
+    suspend fun deleteAccount()
 }
